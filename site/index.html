@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>commit-time-machine — Explore your repository's past</title>
+  <meta name="description" content="A human-friendly, read-only Git history explorer CLI for understanding how your project evolved over time.">
+  <meta name="theme-color" content="#090d12">
+  <link rel="canonical" href="https://aashirzayd.github.io/commit-time-machine/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aashirzayd.github.io/commit-time-machine/">
+  <meta property="og:title" content="commit-time-machine — Explore your repository's past">
+  <meta property="og:description" content="A human-friendly, read-only Git history explorer CLI for understanding how your project evolved over time.">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="commit-time-machine — Explore your repository's past">
+  <meta name="twitter:description" content="A human-friendly, read-only Git history explorer CLI for understanding how your project evolved over time.">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="#" class="brand" aria-label="commit-time-machine home">
+        <span class="brand-icon" aria-hidden="true">●</span>
+        <span class="brand-name">commit-time-machine</span>
+        <span class="badge badge-version">v0.1.0</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#features">Features</a>
+        <a href="#interactive">Interactive</a>
+        <a href="#commands">Commands</a>
+        <a href="#json">JSON Mode</a>
+        <a href="#safety">Safety</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="https://github.com/AashirZayd/commit-time-machine" class="btn btn-secondary btn-sm" target="_blank" rel="noopener noreferrer">
+          <svg class="icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-badge">
+          <span class="indicator-dot" aria-hidden="true"></span>
+          <span>Read-Only Git History Explorer CLI</span>
+        </div>
+
+        <h1 class="hero-title">
+          Your repository has a past.<br>
+          <span class="gradient-text">Explore it.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          <code>commit-time-machine</code> interprets Git history as a clear, human-readable timeline. 
+          Understand how your codebase evolved, view historical repository snapshots, compare points in time, 
+          and track changes across renames—without touching working files or HEAD.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="https://github.com/AashirZayd/commit-time-machine" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            <svg class="icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            <span>View on GitHub</span>
+          </a>
+          <a href="https://www.npmjs.com/package/commit-time-machine" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+            <svg class="icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+              <path d="M0 0v16h16V0H0zm13 13h-2V5H8v8H3V3h10v10z"/>
+            </svg>
+            <span>Install via npm</span>
+          </a>
+        </div>
+
+        <div class="install-bar" role="region" aria-label="Installation command">
+          <div class="install-code">
+            <span class="prompt" aria-hidden="true">$</span>
+            <code id="install-cmd">npm install -g commit-time-machine</code>
+          </div>
+          <button class="copy-btn" id="copy-install-btn" aria-label="Copy install command to clipboard" type="button">
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+
+        <!-- Terminal Showcase -->
+        <div class="terminal-showcase" role="region" aria-label="Interactive terminal showcase preview">
+          <div class="terminal-header">
+            <div class="window-controls" aria-hidden="true">
+              <span class="control close"></span>
+              <span class="control minimize"></span>
+              <span class="control expand"></span>
+            </div>
+            <div class="terminal-title">commit-time-machine — terminal preview</div>
+            <div class="terminal-status"><span class="status-indicator"></span> 100% read-only</div>
+          </div>
+          <div class="terminal-body">
+            <div class="term-line cmd-line"><span class="prompt" aria-hidden="true">$</span> commit-time-machine</div>
+            <div class="term-line bold-line">COMMIT TIME MACHINE</div>
+            <div class="term-line empty-line"></div>
+            <div class="term-line section-header">Repository</div>
+            <div class="term-line term-indent">my-project</div>
+            <div class="term-line empty-line"></div>
+            <div class="term-line section-header">Branch</div>
+            <div class="term-line term-indent">main</div>
+            <div class="term-line empty-line"></div>
+            <div class="term-line section-header">Timeline</div>
+            <div class="term-line timeline-node"><span class="node-dot">●</span> <span class="node-date">2026-09-07</span>  <span class="node-msg">feat: add authentication and session store</span></div>
+            <div class="term-line timeline-pipe">│</div>
+            <div class="term-line timeline-node"><span class="node-dot">●</span> <span class="node-date">2026-09-05</span>  <span class="node-msg">refactor: simplify session handling pipeline</span></div>
+            <div class="term-line timeline-pipe">│</div>
+            <div class="term-line timeline-node"><span class="node-dot">●</span> <span class="node-date">2026-09-01</span>  <span class="node-msg">fix: token expiration handling</span></div>
+            <div class="term-line timeline-pipe">│</div>
+            <div class="term-line timeline-node"><span class="node-dot">●</span> <span class="node-date">2026-08-28</span>  <span class="node-msg">feat: initial auth schema definitions</span></div>
+            <div class="term-line empty-line"></div>
+            <div class="term-line section-header">What's going on</div>
+            <div class="term-line term-indent">This repository has 4 recent commits. Most recent activity is focused on authentication.</div>
+            <div class="term-line empty-line"></div>
+            <div class="term-line section-header">Latest commit</div>
+            <div class="term-line term-indent hash-line">f4e6b2b</div>
+            <div class="term-line term-indent">feat: add authentication and session store</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why This Exists -->
+    <section class="section section-why" id="why">
+      <div class="container">
+        <div class="section-badge">The Problem</div>
+        <h2 class="section-title">Why commit-time-machine?</h2>
+        <p class="section-desc">
+          <code>git log</code> shows what commits exist. But when joining a new codebase, reviewing a large refactor, or debugging a regression, developers need to understand <em>how</em> the project arrived at its current state.
+        </p>
+
+        <div class="grid grid-2">
+          <div class="card comparison-card old-way">
+            <div class="card-label">The Raw Log Approach</div>
+            <div class="card-heading">Raw commits without synthesis</div>
+            <p>Git logs print SHA hashes, author names, and commit messages line by line. Understanding the arc of change requires manually cross-referencing parents, churn volume, directory clusters, and branches.</p>
+            <ul class="check-list red-cross">
+              <li>Raw lists without high-level context</li>
+              <li>Merged branch commits often hidden with shallow flags</li>
+              <li>Checking out past states modifies working trees and HEAD</li>
+              <li>Comparing arbitrary points requires manual diff plumbing</li>
+            </ul>
+          </div>
+
+          <div class="card comparison-card new-way">
+            <div class="card-label">The Time Machine Approach</div>
+            <div class="card-heading">Structured evolutionary timeline</div>
+            <p><code>commit-time-machine</code> interprets Git history deterministically. It synthesizes directory focus, classifies churn magnitude, inspects past file trees, and provides an interactive terminal UI.</p>
+            <ul class="check-list green-check">
+              <li>Deterministic interpretation of commit volume and focus areas</li>
+              <li>Full reachable commit DAG traversed by default</li>
+              <li>Non-destructive historical snapshots without <code>git checkout</code></li>
+              <li>Instant range comparisons and rename tracking</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Features Grid -->
+    <section class="section section-features" id="features">
+      <div class="container">
+        <div class="section-badge">Capabilities</div>
+        <h2 class="section-title">Engineered for Git Exploration</h2>
+        <p class="section-desc">
+          Every capability is built directly on Git plumbing with strict read-only execution.
+        </p>
+
+        <div class="grid grid-3">
+          <div class="card feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <h3 class="card-title">Full Reachable History</h3>
+            <p class="card-text">
+              By default, traverses the complete commit DAG. Commits from merged feature branches are never hidden unless you explicitly pass <code>--first-parent</code>.
+            </p>
+          </div>
+
+          <div class="card feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </div>
+            <h3 class="card-title">Time Travel Snapshots</h3>
+            <p class="card-text">
+              Use <code>--at &lt;commit&gt;</code> to inspect what your repository looked like at any historical commit: root structure, file counts, and changes relative to parent.
+            </p>
+          </div>
+
+          <div class="card feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+            </div>
+            <h3 class="card-title">Historical Comparisons</h3>
+            <p class="card-text">
+              Compare any two points in history with <code>--compare &lt;c1&gt; &lt;c2&gt;</code>. See files added, modified, or removed across releases without checking out either commit.
+            </p>
+          </div>
+
+          <div class="card feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <h3 class="card-title">File Rename Tracking</h3>
+            <p class="card-text">
+              Trace file evolution across renames, refactors, and even deletions with <code>--file &lt;path&gt;</code>. Inspect its history even if the file is no longer in the working tree.
+            </p>
+          </div>
+
+          <div class="card feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <h3 class="card-title">Commit Search & Author Filter</h3>
+            <p class="card-text">
+              Quickly locate relevant changes using case-insensitive <code>--search "&lt;query&gt;"</code> or isolate individual contributions with <code>--author "&lt;name&gt;"</code>.
+            </p>
+          </div>
+
+          <div class="card feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <h3 class="card-title">Strictly Read-Only & Offline</h3>
+            <p class="card-text">
+              Zero mutations to Git state. Never touches working trees, never checks out commits, never creates stashes, and never issues external network requests.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Mode Showcase -->
+    <section class="section section-interactive" id="interactive">
+      <div class="container">
+        <div class="section-badge">Interactive TUI</div>
+        <h2 class="section-title">Navigate History Interactively</h2>
+        <p class="section-desc">
+          Launch full terminal exploration with <code>commit-time-machine --interactive</code> (or <code>-i</code>). Move up and down the timeline, drill into details, and inspect bounded diff previews.
+        </p>
+
+        <div class="interactive-layout">
+          <div class="interactive-tui">
+            <div class="tui-window">
+              <div class="tui-header">
+                <span class="tui-title">COMMIT TIME MACHINE — INTERACTIVE TIMELINE</span>
+                <span class="tui-keys">[↑/↓: navigate] [Enter: inspect] [q: quit]</span>
+              </div>
+              <div class="tui-content">
+                <div class="tui-row active">
+                  <span class="tui-marker">▶</span>
+                  <span class="tui-hash">f4e6b2b</span>
+                  <span class="tui-date">2026-09-07</span>
+                  <span class="tui-subject">fix(ci): ensure build distribution runs before test suite</span>
+                  <span class="tui-churn churn-s">Small</span>
+                </div>
+                <div class="tui-row">
+                  <span class="tui-marker">&nbsp;</span>
+                  <span class="tui-hash">702113b</span>
+                  <span class="tui-date">2026-09-07</span>
+                  <span class="tui-subject">feat: initial release of commit-time-machine v0.1.0</span>
+                  <span class="tui-churn churn-l">Large</span>
+                </div>
+                <div class="tui-row">
+                  <span class="tui-marker">&nbsp;</span>
+                  <span class="tui-hash">98c21a4</span>
+                  <span class="tui-date">2026-09-06</span>
+                  <span class="tui-subject">test: add cross-platform non-tty terminal tests</span>
+                  <span class="tui-churn churn-m">Medium</span>
+                </div>
+                <div class="tui-row">
+                  <span class="tui-marker">&nbsp;</span>
+                  <span class="tui-hash">2a8cc2f</span>
+                  <span class="tui-date">2026-09-06</span>
+                  <span class="tui-subject">refactor: optimize null-delimited git log parsing</span>
+                  <span class="tui-churn churn-s">Small</span>
+                </div>
+              </div>
+              <div class="tui-footer">
+                <div class="tui-status">Commit 1 of 4 · Repository: commit-time-machine · Branch: main</div>
+                <div class="tui-help">Press [Enter] to inspect commit files or [d] for diff preview</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="interactive-controls">
+            <h3 class="controls-title">Keybindings & Behavior</h3>
+            <div class="keybinding-table">
+              <div class="kb-row">
+                <kbd>↑</kbd> / <kbd>↓</kbd> or <kbd>k</kbd> / <kbd>j</kbd>
+                <span>Navigate commits backwards / forwards</span>
+              </div>
+              <div class="kb-row">
+                <kbd>Enter</kbd>
+                <span>Inspect selected commit detail & touched files</span>
+              </div>
+              <div class="kb-row">
+                <kbd>d</kbd>
+                <span>Bounded diff preview (from detail view, max 80 lines)</span>
+              </div>
+              <div class="kb-row">
+                <kbd>Esc</kbd> / <kbd>Backspace</kbd>
+                <span>Return to timeline view from detail or diff</span>
+              </div>
+              <div class="kb-row">
+                <kbd>q</kbd>
+                <span>Exit cleanly and restore terminal screen</span>
+              </div>
+            </div>
+
+            <div class="info-note">
+              <strong>TTY Required:</strong> Interactive mode requires a real terminal. When executed inside non-TTY environments (CI runners, pipes, redirects), it exits gracefully with clear diagnostic guidance.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Practical Commands -->
+    <section class="section section-commands" id="commands">
+      <div class="container">
+        <div class="section-badge">Command Reference</div>
+        <h2 class="section-title">Practical Command Examples</h2>
+        <p class="section-desc">
+          Every command is deterministic, composable, and executes against local repository state.
+        </p>
+
+        <div class="grid grid-2">
+          <div class="cmd-block">
+            <div class="cmd-label">Browse recent commits</div>
+            <pre><code>commit-time-machine --limit 20</code></pre>
+            <p class="cmd-help">Traverse the last 20 reachable commits with churn classifications and directory clusters.</p>
+          </div>
+
+          <div class="cmd-block">
+            <div class="cmd-label">Launch interactive mode</div>
+            <pre><code>commit-time-machine --interactive</code></pre>
+            <p class="cmd-help">Keyboard-driven terminal navigation with commit detail and bounded diff previews.</p>
+          </div>
+
+          <div class="cmd-block">
+            <div class="cmd-label">Inspect a historical snapshot</div>
+            <pre><code>commit-time-machine --at HEAD~5</code></pre>
+            <p class="cmd-help">Inspect repository structure, file count, and top-level folders at an exact commit.</p>
+          </div>
+
+          <div class="cmd-block">
+            <div class="cmd-label">Compare two historical points</div>
+            <pre><code>commit-time-machine --compare v0.1.0 main</code></pre>
+            <p class="cmd-help">Compare file additions, modifications, and deletions between two revisions.</p>
+          </div>
+
+          <div class="cmd-block">
+            <div class="cmd-label">Follow file across renames</div>
+            <pre><code>commit-time-machine --file README.md</code></pre>
+            <p class="cmd-help">Trace historical modifications to a file even after moves, renames, or deletions.</p>
+          </div>
+
+          <div class="cmd-block">
+            <div class="cmd-label">Search commit messages</div>
+            <pre><code>commit-time-machine --search "authentication"</code></pre>
+            <p class="cmd-help">Case-insensitive search across commit subjects and messages.</p>
+          </div>
+
+          <div class="cmd-block">
+            <div class="cmd-label">Filter by author</div>
+            <pre><code>commit-time-machine --author "Aashir"</code></pre>
+            <p class="cmd-help">Show commit counts, recent timeline, and activity for a specific contributor.</p>
+          </div>
+
+          <div class="cmd-block">
+            <div class="cmd-label">Mainline / first-parent only</div>
+            <pre><code>commit-time-machine --first-parent</code></pre>
+            <p class="cmd-help">Follow only the first parent of merge commits to isolate release integration history.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JSON / Automation Mode -->
+    <section class="section section-json" id="json">
+      <div class="container">
+        <div class="section-badge">Automation</div>
+        <h2 class="section-title">First-Class Structured JSON</h2>
+        <p class="section-desc">
+          Pipe output directly into <code>jq</code>, build custom dashboards, or integrate into CI workflows with <code>--json</code>.
+        </p>
+
+        <div class="json-showcase">
+          <div class="json-header">
+            <span class="json-tag">STDOUT</span>
+            <span class="json-cmd">commit-time-machine --json --limit 1</span>
+          </div>
+          <pre class="json-code"><code>{
+  <span class="key">"mode"</span>: <span class="str">"timeline"</span>,
+  <span class="key">"repository"</span>: <span class="str">"commit-time-machine"</span>,
+  <span class="key">"rootPath"</span>: <span class="str">"/path/to/commit-time-machine"</span>,
+  <span class="key">"branch"</span>: <span class="str">"main"</span>,
+  <span class="key">"isDetached"</span>: <span class="bool">false</span>,
+  <span class="key">"head"</span>: <span class="str">"f4e6b2bb525526cb0eb3045e98261f1c68307b62"</span>,
+  <span class="key">"isFirstParentOnly"</span>: <span class="bool">false</span>,
+  <span class="key">"totalCommits"</span>: <span class="num">1</span>,
+  <span class="key">"commits"</span>: [
+    {
+      <span class="key">"hash"</span>: <span class="str">"f4e6b2bb525526cb0eb3045e98261f1c68307b62"</span>,
+      <span class="key">"shortHash"</span>: <span class="str">"f4e6b2b"</span>,
+      <span class="key">"author"</span>: <span class="str">"Aashir Zayd"</span>,
+      <span class="key">"date"</span>: <span class="str">"2026-09-07"</span>,
+      <span class="key">"subject"</span>: <span class="str">"fix(ci): ensure build distribution runs before test suite"</span>,
+      <span class="key">"isMerge"</span>: <span class="bool">false</span>,
+      <span class="key">"churnMagnitude"</span>: <span class="str">"Small"</span>,
+      <span class="key">"filesChanged"</span>: <span class="num">2</span>,
+      <span class="key">"additions"</span>: <span class="num">4</span>,
+      <span class="key">"deletions"</span>: <span class="num">3</span>
+    }
+  ],
+  <span class="key">"interpretation"</span>: {
+    <span class="key">"summary"</span>: <span class="str">"This repository has 1 recent commit."</span>,
+    <span class="key">"focusArea"</span>: <span class="str">"ci"</span>,
+    <span class="key">"observableFacts"</span>: [
+      <span class="str">"Activity spans 2026-09-07"</span>,
+      <span class="str">"1 active contributor"</span>
+    ]
+  }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Safety & Architecture -->
+    <section class="section section-safety" id="safety">
+      <div class="container">
+        <div class="section-badge">Design Principles</div>
+        <h2 class="section-title">Safe, Read-Only, and Deterministic</h2>
+        <p class="section-desc">
+          A development tool should never risk damaging your working state.
+        </p>
+
+        <div class="grid grid-3">
+          <div class="card safety-card">
+            <h3 class="card-title">100% Read-Only</h3>
+            <p class="card-text">
+              Zero mutation. Never executes <code>checkout</code>, <code>switch</code>, <code>reset</code>, <code>restore</code>, <code>merge</code>, or <code>stash</code>. Working tree files are never altered.
+            </p>
+          </div>
+
+          <div class="card safety-card">
+            <h3 class="card-title">100% Offline</h3>
+            <p class="card-text">
+              Zero network calls, zero telemetry, zero analytics tracking. Operates entirely against the local Git repository on your machine.
+            </p>
+          </div>
+
+          <div class="card safety-card">
+            <h3 class="card-title">Pure Architecture</h3>
+            <p class="card-text">
+              Strictly decoupled pipeline: Git Plumbing Collection → Analysis Engine → Deterministic Interpreter → Terminal / JSON Renderer.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Part of the Toolkit: git-wtf connection -->
+    <section class="section section-toolkit" id="toolkit">
+      <div class="container">
+        <div class="toolkit-box">
+          <div class="toolkit-badge">Developer Workflow Toolkit</div>
+          <h2 class="toolkit-title">Two complementary tools for your Git workflow</h2>
+          <p class="toolkit-desc">
+            Open-source developer tools built by Aashir Zayd to give developers total clarity over their repositories.
+          </p>
+
+          <div class="toolkit-grid">
+            <a href="https://github.com/AashirZayd/git-wtf" class="toolkit-card" target="_blank" rel="noopener noreferrer">
+              <div class="tk-tag">PRESENT STATE</div>
+              <div class="tk-title">git-wtf</div>
+              <div class="tk-concept">"What's happening in my repository RIGHT NOW?"</div>
+              <p class="tk-body">Instant diagnostic of unstaged modifications, untracked files, ahead/behind upstream status, stashes, and branch state.</p>
+              <div class="tk-link">github.com/AashirZayd/git-wtf →</div>
+            </a>
+
+            <div class="toolkit-card tk-current">
+              <div class="tk-tag">HISTORICAL TIMELINE</div>
+              <div class="tk-title">commit-time-machine</div>
+              <div class="tk-concept">"What happened in my repository BEFORE?"</div>
+              <p class="tk-body">Human-friendly timeline exploration, historical snapshots, range comparisons, rename tracking, and interactive terminal navigation.</p>
+              <div class="tk-link">github.com/AashirZayd/commit-time-machine (Current)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section section-cta">
+      <div class="container text-center">
+        <h2 class="cta-heading">Ready to explore your repository's past?</h2>
+        <p class="cta-sub">Install via npm and run in any Git repository in seconds.</p>
+        <div class="hero-cta-group justify-center">
+          <a href="https://github.com/AashirZayd/commit-time-machine" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            <span>View on GitHub</span>
+          </a>
+          <a href="https://www.npmjs.com/package/commit-time-machine" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+            <span>npm package</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <span class="brand-icon" aria-hidden="true">●</span>
+        <span class="footer-title">commit-time-machine</span>
+        <span class="footer-copy">MIT License · Copyright © 2026 Aashir Zayd</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://github.com/AashirZayd/commit-time-machine" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+        <a href="https://www.npmjs.com/package/commit-time-machine" target="_blank" rel="noopener noreferrer">npm Package</a>
+        <a href="https://github.com/AashirZayd/git-wtf" target="_blank" rel="noopener noreferrer">git-wtf</a>
+        <a href="https://github.com/AashirZayd/commit-time-machine/issues" target="_blank" rel="noopener noreferrer">Issue Tracker</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
