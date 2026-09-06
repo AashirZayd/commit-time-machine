@@ -1,4 +1,4 @@
-// commit-time-machine — Landing Page Scripts
+// commit-time-machine — Retro Developer UI Interaction Scripts
 (function () {
   'use strict';
 
@@ -9,13 +9,12 @@
   if (copyBtn && installCmd) {
     copyBtn.addEventListener('click', async () => {
       const textToCopy = installCmd.innerText.trim();
-      const originalText = copyBtn.querySelector('.copy-text')?.innerText || 'Copy';
+      const originalText = copyBtn.innerText;
 
       try {
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(textToCopy);
         } else {
-          // Fallback for non-https / older browsers
           const textArea = document.createElement('textarea');
           textArea.value = textToCopy;
           textArea.style.position = 'fixed';
@@ -28,18 +27,11 @@
           textArea.remove();
         }
 
-        const copyTextEl = copyBtn.querySelector('.copy-text');
-        if (copyTextEl) {
-          copyTextEl.innerText = 'Copied!';
-        }
-        copyBtn.style.borderColor = '#10b981';
+        copyBtn.innerText = '[ COPIED! ]';
         copyBtn.style.color = '#10b981';
 
         setTimeout(() => {
-          if (copyTextEl) {
-            copyTextEl.innerText = originalText;
-          }
-          copyBtn.style.borderColor = '';
+          copyBtn.innerText = originalText;
           copyBtn.style.color = '';
         }, 2000);
       } catch (err) {

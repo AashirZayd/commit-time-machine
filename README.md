@@ -285,10 +285,11 @@ Planned future explorations:
 
 ## Developer Toolkit
 
-Part of a pair of complementary developer tools by [Aashir Zayd](https://github.com/AashirZayd):
+Part of an open-source suite of focused developer tools by [Aashir Zayd](https://github.com/AashirZayd):
 
-- [git-wtf](https://github.com/AashirZayd/git-wtf): Understand what's happening in your repository **right now**.
-- [commit-time-machine](https://github.com/AashirZayd/commit-time-machine): Understand what happened in your repository **before**.
+1. [Smart Commit CLI](https://github.com/AashirZayd/smartcommitcli): Intelligent conventional commit message generation from staged diffs.
+2. [git-wtf](https://github.com/AashirZayd/git-wtf): Understand what's happening in your repository **right now**.
+3. [commit-time-machine](https://github.com/AashirZayd/commit-time-machine): Understand what happened in your repository **before**.
 
 ---
 

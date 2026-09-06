@@ -1,0 +1,896 @@
+/* ==========================================================================
+   commit-time-machine — Retro Developer UI System (Early 2000s meets 2026 Polish)
+   Visual System: SourceForge / Classic Windows Developer Chrome / Dark Technical Base
+   ========================================================================== */
+
+:root {
+  /* Dark Technical Base */
+  --bg-canvas: #070b12;
+  --bg-panel: #0d1527;
+  --bg-panel-secondary: #111b2e;
+  --bg-panel-inset: #05080f;
+  --bg-titlebar: #16243b;
+  --bg-titlebar-active: #1d3150;
+  
+  /* Borders */
+  --border-dark: #000000;
+  --border-light: #2c4266;
+  --border-subtle: #1e2c44;
+  --border-grid: rgba(28, 42, 68, 0.4);
+
+  /* Typography */
+  --font-ui: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  --font-mono: "Courier New", Courier, monospace;
+
+  /* Text Colors */
+  --text-primary: #e5e7eb;
+  --text-muted: #94a3b8;
+  --text-dark: #64748b;
+  --text-white: #ffffff;
+
+  /* Technical Accents */
+  --accent-amber: #f59e0b;
+  --accent-green: #10b981;
+  --accent-cyan: #38bdf8;
+  --accent-blue: #3b82f6;
+  --accent-red: #ef4444;
+
+  /* Bevel & Classic Button Shadows */
+  --btn-bg: #16233b;
+  --btn-border-top: #364e75;
+  --btn-border-left: #364e75;
+  --btn-border-right: #090e18;
+  --btn-border-bottom: #090e18;
+}
+
+/* Reset & Base Setup */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-ui);
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-canvas);
+  background-image: 
+    linear-gradient(to right, var(--border-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: center top;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+/* Typography & Monospace Elements */
+code, kbd, pre, .mono {
+  font-family: var(--font-mono);
+}
+
+a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent-amber);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Technical Status Strip (Top)
+   ========================================================================== */
+.system-strip {
+  background-color: #04070c;
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.35rem 0;
+  color: var(--text-muted);
+}
+
+.strip-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.strip-items {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.strip-item span.ok {
+  color: var(--accent-green);
+  font-weight: bold;
+}
+
+.strip-item span.accent {
+  color: var(--accent-amber);
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   Header & Classic Navigation Bar
+   ========================================================================== */
+.site-header {
+  background-color: var(--bg-panel);
+  border-bottom: 2px solid var(--border-light);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--text-white);
+  font-family: var(--font-mono);
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+.brand-glyph {
+  color: var(--accent-amber);
+}
+
+.brand-badge {
+  background-color: #080e1a;
+  border: 1px solid var(--border-light);
+  color: var(--accent-amber);
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+}
+
+.nav-link:hover {
+  background-color: var(--bg-panel-secondary);
+  border: 1px solid var(--border-light);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Buttons (Classic Beveled Hardware Style)
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.5rem 1.1rem;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: var(--btn-bg);
+  color: var(--text-white);
+  border-top: 2px solid var(--btn-border-top);
+  border-left: 2px solid var(--btn-border-left);
+  border-right: 2px solid var(--btn-border-right);
+  border-bottom: 2px solid var(--btn-border-bottom);
+  box-shadow: 1px 1px 0px #000;
+  transition: filter 100ms;
+}
+
+.btn:hover {
+  filter: brightness(1.15);
+  text-decoration: none;
+}
+
+.btn:active {
+  border-top: 2px solid var(--btn-border-bottom);
+  border-left: 2px solid var(--btn-border-right);
+  border-right: 2px solid var(--btn-border-left);
+  border-bottom: 2px solid var(--btn-border-top);
+  transform: translate(1px, 1px);
+}
+
+.btn-primary {
+  background-color: #1f3354;
+  border-top-color: #4a6d9e;
+  border-left-color: #4a6d9e;
+  color: #ffffff;
+}
+
+.btn-accent {
+  background-color: #854d0e;
+  border-top-color: #d97706;
+  border-left-color: #d97706;
+  border-right-color: #451a03;
+  border-bottom-color: #451a03;
+  color: #fffbeb;
+}
+
+.btn-sm {
+  padding: 0.3rem 0.65rem;
+  font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   Classic Windows & Panels Chrome
+   ========================================================================== */
+.window-panel {
+  background-color: var(--bg-panel);
+  border: 2px solid var(--border-light);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.6);
+  margin-bottom: 2rem;
+}
+
+.window-titlebar {
+  background: linear-gradient(90deg, var(--bg-titlebar-active), var(--bg-titlebar));
+  border-bottom: 1px solid var(--border-dark);
+  padding: 0.4rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.window-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--text-white);
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.window-controls {
+  display: flex;
+  gap: 3px;
+}
+
+.win-btn {
+  width: 16px;
+  height: 14px;
+  background-color: var(--btn-bg);
+  border-top: 1px solid var(--btn-border-top);
+  border-left: 1px solid var(--btn-border-left);
+  border-right: 1px solid var(--btn-border-right);
+  border-bottom: 1px solid var(--btn-border-bottom);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  line-height: 1;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+}
+
+.window-body {
+  padding: 1.25rem;
+}
+
+.window-body.inset {
+  background-color: var(--bg-panel-inset);
+  border: 1px solid var(--border-dark);
+  margin: 0.75rem;
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero-section {
+  padding: 2.5rem 0 1.5rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sys-tag {
+  background-color: #0c1829;
+  border: 1px solid var(--border-light);
+  color: var(--accent-amber);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-family: var(--font-ui);
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--text-white);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-tagline {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  color: var(--accent-cyan);
+  margin-bottom: 1.25rem;
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+/* Install Box */
+.install-box {
+  background-color: var(--bg-panel-inset);
+  border: 2px solid var(--border-light);
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: inset 1px 1px 4px rgba(0,0,0,0.8);
+}
+
+.install-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: bold;
+  color: var(--accent-amber);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.install-cmd-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.install-cmd-row code {
+  font-size: 0.95rem;
+  color: #f8fafc;
+  font-weight: bold;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.hero-trust-bar {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: 0.5rem;
+  border-top: 1px dotted var(--border-subtle);
+}
+
+/* ==========================================================================
+   Terminal Window Display
+   ========================================================================== */
+.terminal-content {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.term-green { color: var(--accent-green); }
+.term-amber { color: var(--accent-amber); }
+.term-cyan  { color: var(--accent-cyan); }
+.term-muted { color: var(--text-dark); }
+.term-white { color: #ffffff; font-weight: bold; }
+.term-pipe  { color: #334155; }
+
+.term-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background-color: var(--accent-amber);
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ==========================================================================
+   Section Headers (Classic Technical Box Header)
+   ========================================================================== */
+.section {
+  padding: 2.5rem 0;
+}
+
+.section-box-header {
+  background-color: var(--bg-titlebar);
+  border: 2px solid var(--border-light);
+  border-bottom: none;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-box-title {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--text-white);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.section-box-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent-amber);
+}
+
+.section-frame {
+  background-color: var(--bg-panel);
+  border: 2px solid var(--border-light);
+  padding: 1.5rem;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+  margin-bottom: 2.5rem;
+}
+
+/* ==========================================================================
+   Comparison: The Problem vs The Solution
+   ========================================================================== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.module-card {
+  background-color: var(--bg-panel-secondary);
+  border: 1px solid var(--border-light);
+  padding: 1.2rem;
+}
+
+.module-header {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--accent-amber);
+  margin-bottom: 0.4rem;
+}
+
+.module-title {
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: var(--text-white);
+  margin-bottom: 0.6rem;
+}
+
+.module-text {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+.tech-list {
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tech-list li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.tech-list.check li::before {
+  content: "[✓]";
+  position: absolute;
+  left: 0;
+  color: var(--accent-green);
+}
+
+.tech-list.cross li::before {
+  content: "[✗]";
+  position: absolute;
+  left: 0;
+  color: var(--accent-red);
+}
+
+/* ==========================================================================
+   Pipeline / Workflow Section (How It Works)
+   ========================================================================== */
+.pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.pipeline-step {
+  background-color: var(--bg-panel-secondary);
+  border: 1px solid var(--border-light);
+  padding: 1.25rem 1rem;
+  position: relative;
+}
+
+.step-number {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--accent-amber);
+  margin-bottom: 0.35rem;
+}
+
+.step-name {
+  font-size: 1.05rem;
+  font-weight: bold;
+  color: var(--text-white);
+  margin-bottom: 0.5rem;
+}
+
+.step-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   Tables & Command Reference
+   ========================================================================== */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.data-table th, .data-table td {
+  border: 1px solid var(--border-subtle);
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: var(--bg-titlebar);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--text-white);
+  text-transform: uppercase;
+}
+
+.data-table td {
+  background-color: var(--bg-panel-inset);
+}
+
+.data-table tr:nth-child(even) td {
+  background-color: #070d18;
+}
+
+.data-table code {
+  color: var(--accent-cyan);
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   System Information & Read-Only Trust
+   ========================================================================== */
+.sys-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.sys-info-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px dotted var(--border-subtle);
+}
+
+.sys-info-table td.prop {
+  color: var(--text-muted);
+  width: 35%;
+  font-weight: bold;
+}
+
+.sys-info-table td.val {
+  color: var(--text-white);
+}
+
+.sys-info-table td.val.ok {
+  color: var(--accent-green);
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   Family of 3 Open Source Projects Showcase
+   ========================================================================== */
+.toolkit-banner {
+  background: linear-gradient(180deg, #101c30 0%, #0c1626 100%);
+  border: 2px solid var(--border-light);
+  padding: 1.75rem;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+  margin-bottom: 2.5rem;
+}
+
+.toolkit-header-box {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+}
+
+.toolkit-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--accent-amber);
+  text-transform: uppercase;
+}
+
+.toolkit-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-white);
+  margin-top: 0.25rem;
+}
+
+.toolkit-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.family-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.family-card {
+  background-color: var(--bg-panel-inset);
+  border: 2px solid var(--border-light);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: transform 100ms, border-color 100ms;
+}
+
+.family-card:hover {
+  border-color: var(--accent-amber);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.family-card.current {
+  border-color: var(--accent-amber);
+  background-color: #0b1424;
+}
+
+.family-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: bold;
+  color: var(--accent-amber);
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.family-name {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: var(--text-white);
+  margin-bottom: 0.3rem;
+}
+
+.family-quote {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--accent-cyan);
+  margin-bottom: 0.75rem;
+}
+
+.family-body {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+
+.family-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-amber);
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   Footer (Nostalgic Open Source System)
+   ========================================================================== */
+.site-footer {
+  background-color: #04070c;
+  border-top: 2px solid var(--border-light);
+  padding: 2.5rem 0 2rem;
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+}
+
+.footer-links a:hover {
+  color: var(--text-white);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-dark);
+  font-size: 0.72rem;
+  border-top: 1px dotted var(--border-subtle);
+  padding-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .family-grid, .pipeline-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid-3, .grid-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-nav {
+    display: none;
+  }
+
+  .grid-2, .grid-3, .grid-4, .family-grid, .pipeline-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .install-cmd-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
