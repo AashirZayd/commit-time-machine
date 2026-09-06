@@ -1,0 +1,53 @@
+{
+  "name": "commit-time-machine",
+  "version": "0.1.0",
+  "description": "A human-friendly Git history explorer CLI that interprets repository evolution over time",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "commit-time-machine": "./bin/commit-time-machine.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "git",
+    "git-history",
+    "cli",
+    "timeline",
+    "developer-tools",
+    "productivity"
+  ],
+  "author": "Aashir Zayd",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AashirZayd/commit-time-machine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AashirZayd/commit-time-machine/issues"
+  },
+  "homepage": "https://github.com/AashirZayd/commit-time-machine#readme",
+  "dependencies": {
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.7"
+  }
+}
