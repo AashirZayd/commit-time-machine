@@ -467,7 +467,7 @@ describe('commit-time-machine Phase 2 E2E Test Suite', () => {
 
   // 30. outside repository
   it('30. reports clean error when executed outside a Git repository', async () => {
-    const nonGitDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ctm-nongit-'));
+    const nonGitDir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'ctm-nongit-')));
     try {
       const res = await runCliProcess([], nonGitDir);
       expect(res.exitCode).toBe(1);
@@ -476,7 +476,11 @@ describe('commit-time-machine Phase 2 E2E Test Suite', () => {
       expect(text).toContain('✗ Not inside a Git repository.');
       expect(text).toContain('Run this command from a Git repository.');
     } finally {
-      fs.rmSync(nonGitDir, { recursive: true, force: true });
+      try {
+        fs.rmSync(nonGitDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+      } catch {
+        // Best-effort cleanup
+      }
     }
   });
 

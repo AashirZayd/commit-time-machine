@@ -17,7 +17,7 @@ export interface TestRepo {
 }
 
 export function createTempRepo(): TestRepo {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ctm-test-repo-'));
+  const dir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'ctm-test-repo-')));
 
   const git = (args: string[]) => {
     return execFileSync('git', args, {
@@ -52,7 +52,7 @@ export function createTempRepo(): TestRepo {
 
   const cleanup = () => {
     try {
-      fs.rmSync(dir, { recursive: true, force: true });
+      fs.rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
     } catch {
       // Best-effort cleanup
     }
